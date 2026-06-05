@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import CuratedExperiences from "@/components/CuratedExperiences";
 import ElevateStay from "@/components/ElevateStay";
 import Manifesto from "@/components/Manifesto";
+import HobieBeachPackage from "@/components/HobieBeachPackage";
 import GuestStoriesCTA from "@/components/GuestStoriesCTA";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <CuratedExperiences />
       <ElevateStay />
       <Manifesto />
+      <HobieBeachPackage />
       <GuestStoriesCTA />
     </main>
   );
