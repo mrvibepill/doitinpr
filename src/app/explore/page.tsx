@@ -607,7 +607,7 @@ export default function ExplorePage() {
 
         {/* Cinematic background image — z-0 keeps it below all overlay divs */}
         <Image
-          src="/hobiebeach-01-doitinpr.png"
+          src="/images/hobiebeach-01-doitinpr.png"
           alt=""
           fill
           priority
