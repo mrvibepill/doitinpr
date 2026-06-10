@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -45,13 +46,13 @@ export default function Hero() {
 
         {/* CTA row */}
         <div className="flex flex-col gap-4 mt-10 lg:flex-row lg:items-center lg:mt-14">
-          <a
-            href="#explore"
+          <Link
+            href="/explore"
             className="cta-gold inline-flex items-center justify-center bg-[#C9A96E] text-[#0D0D0D] px-10 py-4 text-xs font-[500] uppercase hover:bg-[#F5F0EB] hover:tracking-[0.2em]"
             style={{ letterSpacing: "0.15em", borderRadius: 0 }}
           >
             Start Exploring
-          </a>
+          </Link>
           <a
             href="#learn-more"
             className="cta-gold inline-flex items-center justify-center border border-[#C9A96E] text-[#C9A96E] px-10 py-4 text-xs font-[300] uppercase hover:bg-[#C9A96E] hover:text-[#0D0D0D]"
