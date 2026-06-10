@@ -616,11 +616,11 @@ export default function ExplorePage() {
           aria-hidden="true"
         />
 
-        {/* Layer 1 — base dark wash (zinc-950 at 40%) */}
-        <div className="absolute inset-0 z-10 bg-zinc-950/40" />
+        {/* Layer 1 — base dark wash (zinc-950 at 25%) */}
+        <div className="absolute inset-0 z-10 bg-zinc-950/25" />
 
         {/* Layer 2 — gradient: transparent top → solid obsidian bottom */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-b from-transparent via-[#0D0D0D]/30 to-[#0D0D0D]" />
+        <div className="absolute inset-0 z-20 bg-gradient-to-b from-transparent via-[#0D0D0D]/20 to-[#0D0D0D]" />
 
         {/* Layer 3 — subtle left-side radial vignette to frame the text */}
         <div
