@@ -605,35 +605,26 @@ export default function ExplorePage() {
       {/* ── Page Header ─────────────────────────────────────────────────────── */}
       <header className="relative overflow-hidden min-h-[500px] lg:min-h-[600px] px-6 pt-20 pb-14 lg:px-20 lg:pt-28 lg:pb-20">
 
-        {/* Cinematic background image — z-0 keeps it below all overlay divs */}
+        {/* Background image — quality 100, no blur */}
         <Image
           src="/images/hobiebeach-01-doitinpr.png"
           alt=""
           fill
           priority
+          quality={100}
           className="object-cover object-center z-0"
           sizes="100vw"
           aria-hidden="true"
         />
 
-        {/* Layer 1 — base dark wash (zinc-950 at 25%) */}
+        {/* Light dark wash so text stays readable */}
         <div className="absolute inset-0 z-10 bg-zinc-950/25" />
 
-        {/* Layer 2 — gradient: transparent top → solid obsidian bottom */}
+        {/* Bottom fade to obsidian — keeps catalog below seamless */}
         <div className="absolute inset-0 z-20 bg-gradient-to-b from-transparent via-[#0D0D0D]/20 to-[#0D0D0D]" />
 
-        {/* Layer 3 — subtle left-side radial vignette to frame the text */}
-        <div
-          className="absolute inset-0 z-30"
-          style={{
-            background:
-              "radial-gradient(ellipse 70% 100% at 20% 50%, transparent 0%, #0D0D0D 100%)",
-            opacity: 0.5,
-          }}
-        />
-
-        {/* Text content — sits above all overlay layers */}
-        <div className="relative z-40">
+        {/* Text content */}
+        <div className="relative z-30">
           <p
             className="font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E] text-xs uppercase mb-5"
             style={{ letterSpacing: "0.18em" }}
