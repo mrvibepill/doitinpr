@@ -603,38 +603,38 @@ export default function ExplorePage() {
     <main className="min-h-screen bg-[#0D0D0D]">
 
       {/* ── Page Header ─────────────────────────────────────────────────────── */}
-      <header className="relative overflow-hidden px-6 pt-20 pb-14 lg:px-20 lg:pt-28 lg:pb-20">
+      <header className="relative overflow-hidden min-h-[500px] lg:min-h-[600px] px-6 pt-20 pb-14 lg:px-20 lg:pt-28 lg:pb-20">
 
-        {/* Cinematic background image */}
+        {/* Cinematic background image — z-0 keeps it below all overlay divs */}
         <Image
           src="/hobiebeach-01-doitinpr.png"
           alt=""
           fill
           priority
-          className="object-cover object-center"
+          className="object-cover object-center z-0"
           sizes="100vw"
           aria-hidden="true"
         />
 
-        {/* Layer 1 — base dark wash (zinc-950 at 85%) */}
-        <div className="absolute inset-0 bg-zinc-950/85" />
+        {/* Layer 1 — base dark wash (zinc-950 at 70%) */}
+        <div className="absolute inset-0 z-10 bg-zinc-950/70" />
 
         {/* Layer 2 — gradient: transparent top → solid obsidian bottom
             ensures a seamless bleed into the dark catalog section below */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0D0D0D]/60 to-[#0D0D0D]" />
+        <div className="absolute inset-0 z-20 bg-gradient-to-b from-transparent via-[#0D0D0D]/60 to-[#0D0D0D]" />
 
         {/* Layer 3 — subtle left-side radial vignette to frame the text */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 z-30"
           style={{
             background:
               "radial-gradient(ellipse 70% 100% at 20% 50%, transparent 0%, #0D0D0D 100%)",
-            opacity: 0.55,
+            opacity: 0.5,
           }}
         />
 
         {/* Text content — sits above all overlay layers */}
-        <div className="relative z-10">
+        <div className="relative z-40">
           <p
             className="font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E] text-xs uppercase mb-5"
             style={{ letterSpacing: "0.18em" }}
