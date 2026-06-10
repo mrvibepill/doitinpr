@@ -10,6 +10,7 @@ export default function Hero() {
         alt="Hobie Beach, Puerto Rico"
         fill
         priority
+        quality={100}
         className="object-cover object-center"
       />
 
