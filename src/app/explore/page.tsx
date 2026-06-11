@@ -153,6 +153,7 @@ const SERVICES: Service[] = [
     description: "Condado's finest tables, personally vetted by our concierge team. From coastal seafood to elevated modern cuisine.",
     gradient: "from-[#1a0e04] via-[#281608] to-[#0f0a03]",
     topAccent: "border-t-[#9a5010]",
+    image: "https://www.elsanjuanhotel.com/content/uploads/2023/04/MM_022-scaled.jpeg",
   },
   {
     id: "metro-dinner-beach",

@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.irbchairs.com" },
       { protocol: "https", hostname: "queensland.com" },
       { protocol: "https", hostname: "justforthebeach.com" },
+      { protocol: "https", hostname: "www.elsanjuanhotel.com" },
     ],
   },
 };
