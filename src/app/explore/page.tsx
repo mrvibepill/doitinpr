@@ -23,6 +23,7 @@ interface Service {
   gradient: string;
   topAccent: string;
   isFeatured?: boolean;
+  image?: string;
 }
 
 // ─── Dataset ──────────────────────────────────────────────────────────────────
@@ -49,6 +50,7 @@ const SERVICES: Service[] = [
     gradient: "from-[#062030] via-[#0a3550] to-[#041825]",
     topAccent: "border-t-[#1a6fa0]",
     isFeatured: true,
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/35/17/49/cold-refreshments.jpg?w=700&h=400&s=1",
   },
 
   // ── Metro Area · Ocean Charters / Water Sports ───────────────────────────────
@@ -61,6 +63,7 @@ const SERVICES: Service[] = [
     description: "High-performance jet ski rental along the Isla Verde coast. Feel the Caribbean spray at full throttle with our premium fleet.",
     gradient: "from-[#051828] via-[#0a2a45] to-[#030f1a]",
     topAccent: "border-t-[#1a5a8a]",
+    image: "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/11/65/8d/ad.jpg",
   },
   {
     id: "metro-banana",
@@ -71,6 +74,7 @@ const SERVICES: Service[] = [
     description: "Group thrills on the water. Hold on tight as you're pulled across the turquoise bay — pure Caribbean fun for all.",
     gradient: "from-[#0a1e10] via-[#0d3018] to-[#060f0a]",
     topAccent: "border-t-[#1a6a30]",
+    image: "https://images.squarespace-cdn.com/content/v1/67d108c93c81c847d2543a12/3b231579-c97e-4711-89ed-a81d8593959e/Banana+Boat+Watersports+4U.JPG",
   },
   {
     id: "metro-parasailing",
@@ -81,6 +85,7 @@ const SERVICES: Service[] = [
     description: "Ascend above the coastline and take in panoramic views of San Juan from 400 feet. A breathtaking aerial escape over the Caribbean.",
     gradient: "from-[#080820] via-[#101035] to-[#050510]",
     topAccent: "border-t-[#3a3a9a]",
+    image: "https://images.squarespace-cdn.com/content/v1/67d108c93c81c847d2543a12/397f95b7-57fc-47c3-a1a7-f26685cf931c/Parasail+Puerto+Rico.JPG",
   },
   {
     id: "metro-atv",
@@ -91,6 +96,7 @@ const SERVICES: Service[] = [
     description: "Off-road adventures at Hacienda Campo Rico. Navigate rugged trails through Puerto Rico's lush interior on premium ATVs.",
     gradient: "from-[#1a0e04] via-[#2a1808] to-[#0f0a03]",
     topAccent: "border-t-[#8a4a10]",
+    image: "https://camporicotrailrides.com/wp-content/uploads/sites/8143/2025/11/DSC08413.jpg?resize=360%2C240&zoom=2",
   },
   {
     id: "metro-horse",
@@ -111,6 +117,7 @@ const SERVICES: Service[] = [
     description: "Glide through the mangrove lagoons of Condado with an expert guide. Discover hidden ecosystems steps from the city's skyline.",
     gradient: "from-[#041510] via-[#072218] to-[#020d0a]",
     topAccent: "border-t-[#1a7050]",
+    image: "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/13/c4/8d/be.jpg",
   },
   {
     id: "metro-paddleboard",
@@ -121,6 +128,7 @@ const SERVICES: Service[] = [
     description: "Stand-up paddle boarding on calm Caribbean waters. Perfect for sunrise sessions or golden-hour glides along the shore.",
     gradient: "from-[#061828] via-[#0a2840] to-[#030f18]",
     topAccent: "border-t-[#1a5a80]",
+    image: "https://www.pinegrovesurfclub.com/wp-content/uploads/sites/8158/2025/11/AdobeStock_381194412-e1763575455379.jpeg?resize=360%2C240&zoom=2",
   },
 
   // ── Metro Area · Culinary ────────────────────────────────────────────────────
@@ -133,6 +141,7 @@ const SERVICES: Service[] = [
     description: "The definitive Isla Verde dining edit — five curated tables where flavor, atmosphere, and service converge into something unforgettable.",
     gradient: "from-[#1a0808] via-[#2a1010] to-[#0f0505]",
     topAccent: "border-t-[#9a2020]",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2c/c7/ae/4a/caption.jpg?w=900&h=500&s=1",
   },
   {
     id: "metro-dine-cond",
@@ -154,6 +163,7 @@ const SERVICES: Service[] = [
     gradient: "from-[#1a0d05] via-[#2a1808] to-[#0f0a04]",
     topAccent: "border-t-[#c9a96e]",
     isFeatured: true,
+    image: "https://www.sanjuaninsider.com/wp-content/uploads/2025/02/valentines-sj-featured.webp",
   },
   {
     id: "metro-dine-osj",
@@ -164,6 +174,7 @@ const SERVICES: Service[] = [
     description: "Dine inside UNESCO-listed cobblestone streets. Old San Juan's three standout venues, each with centuries of history beneath their ceilings.",
     gradient: "from-[#0d0818] via-[#180d28] to-[#080510]",
     topAccent: "border-t-[#5a3090]",
+    image: "https://shesavesshetravels.com/wp-content/uploads/2024/12/best-restaurants-in-Old-San-Juan-768x1024.jpg.webp",
   },
 
   // ── Metro Area · VIP Tours ────────────────────────────────────────────────────
@@ -176,6 +187,7 @@ const SERVICES: Service[] = [
     description: "A private guided experience inside the 16th-century fortress overlooking the Atlantic. History brought to life with exclusive access and expert narration.",
     gradient: "from-[#0a1018] via-[#101825] to-[#060a10]",
     topAccent: "border-t-[#2a4a6a]",
+    image: "https://sanjuantourspr.com/wp-content/uploads/sites/3917/2023/02/El-Morro-Castle.jpeg?resize=360%2C240&zoom=2",
   },
   {
     id: "metro-cristobal",
@@ -186,6 +198,7 @@ const SERVICES: Service[] = [
     description: "Explore the Americas' largest Spanish colonial fortress at your own pace with a private concierge guide. Tunnels, ramparts, and panoramic bay views included.",
     gradient: "from-[#0a0e18] via-[#121828] to-[#060810]",
     topAccent: "border-t-[#2a3a7a]",
+    image: "https://sanjuantourspr.com/wp-content/uploads/sites/3917/2025/10/000_36f687.jpg?resize=1200%2C900&zoom=2",
   },
 
   // ── East · Beaches ────────────────────────────────────────────────────────────
@@ -370,7 +383,17 @@ function FeaturedCard({ service }: { service: Service }) {
       <div
         className={`relative overflow-hidden min-h-56 md:col-span-2 md:min-h-full bg-gradient-to-b ${service.gradient} border-t-2 ${service.topAccent}`}
       >
-        <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105 bg-inherit" />
+        {service.image ? (
+          <Image
+            src={service.image}
+            alt={service.name}
+            fill
+            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, 40vw"
+          />
+        ) : (
+          <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-105 bg-inherit" />
+        )}
         {/* Location badge */}
         <div className="absolute bottom-0 left-0 bg-[#0D0D0D]/75 px-4 py-3 backdrop-blur-sm">
           <p
@@ -495,8 +518,18 @@ function ServiceCard({ service }: { service: Service }) {
       <div
         className={`relative h-44 overflow-hidden bg-gradient-to-b ${service.gradient} border-t-2 ${service.topAccent}`}
       >
-        {/* Zoom overlay on hover */}
-        <div className="absolute inset-0 bg-inherit transition-transform duration-700 ease-out group-hover:scale-110" />
+        {service.image && (
+          <Image
+            src={service.image}
+            alt={service.name}
+            fill
+            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          />
+        )}
+        {!service.image && (
+          <div className="absolute inset-0 bg-inherit transition-transform duration-700 ease-out group-hover:scale-110" />
+        )}
         {/* Decorative index */}
         <span
           className="absolute bottom-1 right-4 font-[family-name:var(--font-cormorant)] font-[300] text-[#F5F0EB]/8 text-7xl leading-none select-none"
