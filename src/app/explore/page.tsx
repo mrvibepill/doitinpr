@@ -50,7 +50,7 @@ const SERVICES: Service[] = [
     gradient: "from-[#062030] via-[#0a3550] to-[#041825]",
     topAccent: "border-t-[#1a6fa0]",
     isFeatured: true,
-    image: "https://www.irbchairs.com/cdn/shop/t/2/assets/slideshow_5.jpg?v=174928301860779592181758238617",
+    image: "https://justforthebeach.com/wp-content/uploads/2016/04/Beach2520Chairs_2.jpeg",
   },
 
   // ── Metro Area · Ocean Charters / Water Sports ───────────────────────────────
