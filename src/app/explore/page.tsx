@@ -224,6 +224,7 @@ const SERVICES: Service[] = [
     gradient: "from-[#052520] via-[#083d32] to-[#031510]",
     topAccent: "border-t-[#1a8060]",
     isFeatured: true,
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/7a/8d/48/luquillo-beach.jpg?w=700&h=-1&s=1",
   },
 
   // ── East · Ocean Charters ──────────────────────────────────────────────────────
@@ -237,6 +238,7 @@ const SERVICES: Service[] = [
     gradient: "from-[#040e22] via-[#071830] to-[#020810]",
     topAccent: "border-t-[#1a3a8a]",
     isFeatured: true,
+    image: "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/10/7e/17/6e.jpg",
   },
   {
     id: "east-catamaran",
@@ -257,6 +259,7 @@ const SERVICES: Service[] = [
     description: "A nimble private boat for intimate island-hopping. Navigate to secluded coves and uninhabited keys only accessible by water.",
     gradient: "from-[#040f20] via-[#071828] to-[#020a10]",
     topAccent: "border-t-[#1a4a70]",
+    image: "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/13/e4/eb/f0.jpg",
   },
   {
     id: "east-jetski",
@@ -267,6 +270,7 @@ const SERVICES: Service[] = [
     description: "Blaze across the protected bay of Luquillo on a premium jet ski, with El Yunque's peaks rising behind you. Pure island exhilaration.",
     gradient: "from-[#062018] via-[#0a3025] to-[#031008]",
     topAccent: "border-t-[#1a7050]",
+    image: "https://puertoricojetskirental.com/wp-content/uploads/sites/5200/2022/11/Alex_Jet_Ski-16-scaled.jpg",
   },
 
   // ── East · VIP Tours ────────────────────────────────────────────────────────
@@ -290,6 +294,7 @@ const SERVICES: Service[] = [
     description: "Horse riding and ATV rentals at the iconic Hacienda Carabalí, set against the dramatic El Yunque foothills. The ultimate East coast outdoor experience.",
     gradient: "from-[#150e04] via-[#201508] to-[#0a0803]",
     topAccent: "border-t-[#7a5010]",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/9e/3f/42/el-yunque-national-forest.jpg?w=1200&h=1200&s=1",
   },
 
   // ── East · Culinary ─────────────────────────────────────────────────────────
@@ -302,6 +307,7 @@ const SERVICES: Service[] = [
     description: "Luquillo's most beloved dining destinations — from the famous kiosk strip to elevated beachfront tables with fresh-caught Caribbean seafood.",
     gradient: "from-[#180804] via-[#280e06] to-[#0f0503]",
     topAccent: "border-t-[#9a3010]",
+    image: "https://www.luquillobeach.com/storage/app/public/uploads/sama-luquillo-beach-outdoor-patio-exterior.png",
   },
   {
     id: "east-dine-rg",
@@ -312,6 +318,7 @@ const SERVICES: Service[] = [
     description: "Intimate farm-to-table experiences and upscale casual dining on the edge of El Yunque. Locally sourced, expertly prepared.",
     gradient: "from-[#0d1508] via-[#182010] to-[#080c05]",
     topAccent: "border-t-[#4a7020]",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/f2/64/97/photo0jpg.jpg?w=900&h=500&s=1",
   },
   {
     id: "east-dine-faj",
@@ -322,6 +329,7 @@ const SERVICES: Service[] = [
     description: "Fajardo's waterfront dining edit — catch-of-the-day menus, sunset views over the cays, and the freshest mofongo on the island.",
     gradient: "from-[#04100e] via-[#071a18] to-[#020a08]",
     topAccent: "border-t-[#1a7060]",
+    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/21/52/de/6b/caption.jpg",
   },
 ];
 

@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "queensland.com" },
       { protocol: "https", hostname: "justforthebeach.com" },
       { protocol: "https", hostname: "www.elsanjuanhotel.com" },
+      { protocol: "https", hostname: "puertoricojetskirental.com" },
+      { protocol: "https", hostname: "www.luquillobeach.com" },
     ],
   },
 };
