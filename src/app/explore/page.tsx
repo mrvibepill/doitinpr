@@ -176,7 +176,7 @@ const SERVICES: Service[] = [
     description: "Dine inside UNESCO-listed cobblestone streets. Old San Juan's three standout venues, each with centuries of history beneath their ceilings.",
     gradient: "from-[#0d0818] via-[#180d28] to-[#080510]",
     topAccent: "border-t-[#5a3090]",
-    image: "https://shesavesshetravels.com/wp-content/uploads/2024/12/best-restaurants-in-Old-San-Juan-768x1024.jpg.webp",
+    image: "https://shesavesshetravels.com/wp-content/uploads/2024/12/best-restaurants-old-san-juan.jpg",
   },
 
   // ── Metro Area · VIP Tours ────────────────────────────────────────────────────
