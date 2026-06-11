@@ -385,7 +385,60 @@ function SubLocationBadge({ name }: { name: string }) {
   );
 }
 
-function FeaturedCard({ service }: { service: Service }) {
+// ─── Cart types ───────────────────────────────────────────────────────────────
+
+interface CardProps {
+  service: Service;
+  selected: boolean;
+  onToggle: () => void;
+}
+
+// ─── Shared cart button ────────────────────────────────────────────────────────
+
+function AddButton({
+  selected,
+  onToggle,
+  size = "md",
+}: {
+  selected: boolean;
+  onToggle: () => void;
+  size?: "sm" | "md";
+}) {
+  return (
+    <button
+      onClick={onToggle}
+      className={`cta-gold inline-flex items-center justify-center gap-2.5 font-[family-name:var(--font-montserrat)] font-[500] uppercase transition-all duration-300 ${
+        size === "md"
+          ? "px-7 py-4 text-[10px]"
+          : "px-5 py-3 text-[9px]"
+      } ${
+        selected
+          ? "bg-[#F5F0EB] text-[#0D0D0D]"
+          : "bg-[#C9A96E] text-[#0D0D0D] hover:bg-[#F5F0EB]"
+      }`}
+      style={{ letterSpacing: "0.18em", borderRadius: 0 }}
+      aria-pressed={selected}
+    >
+      {selected ? (
+        <>
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+            <path d="M1.5 5.5L4.5 8.5L9.5 2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="square" />
+          </svg>
+          Added to Stay
+        </>
+      ) : (
+        <>
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <path d="M5 1V9M1 5H9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="square" />
+          </svg>
+          Add to Itinerary
+        </>
+      )}
+    </button>
+  );
+}
+
+function FeaturedCard({ service, selected, onToggle }: CardProps) {
   return (
     <article
       className="group col-span-1 md:col-span-2 xl:col-span-3 grid grid-cols-1 border border-[#C9A96E]/20 overflow-hidden bg-[#0f0f0f] md:grid-cols-5 transition-colors duration-500 hover:border-[#C9A96E]/40"
@@ -502,13 +555,7 @@ function FeaturedCard({ service }: { service: Service }) {
 
         {/* CTA */}
         <div className="mt-9 flex flex-col gap-3">
-          <button
-            className="cta-gold inline-flex items-center justify-center gap-3 bg-[#C9A96E] text-[#0D0D0D] px-7 py-4 text-[10px] font-[500] uppercase self-start hover:bg-[#F5F0EB] hover:gap-4 transition-all"
-            style={{ letterSpacing: "0.18em", borderRadius: 0 }}
-          >
-            Inquire via Concierge
-            <ArrowRight />
-          </button>
+          <AddButton selected={selected} onToggle={onToggle} size="md" />
           <p
             className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/20 text-[9px]"
             style={{ letterSpacing: "0.1em" }}
@@ -521,7 +568,7 @@ function FeaturedCard({ service }: { service: Service }) {
   );
 }
 
-function ServiceCard({ service }: { service: Service }) {
+function ServiceCard({ service, selected, onToggle }: CardProps) {
   return (
     <article
       className="group flex flex-col border border-[#C9A96E]/15 bg-[#0f0f0f] overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:border-[#C9A96E]/40"
@@ -597,13 +644,7 @@ function ServiceCard({ service }: { service: Service }) {
 
         {/* CTA */}
         <div className="mt-6 pt-5 border-t border-[#C9A96E]/10">
-          <button
-            className="cta-gold inline-flex items-center gap-2.5 font-[family-name:var(--font-montserrat)] font-[300] text-[#C9A96E] text-[10px] uppercase group-hover:gap-4 transition-all duration-300"
-            style={{ letterSpacing: "0.14em" }}
-          >
-            Inquire via Concierge
-            <ArrowRight />
-          </button>
+          <AddButton selected={selected} onToggle={onToggle} size="sm" />
         </div>
       </div>
     </article>
@@ -617,6 +658,18 @@ export default function ExplorePage() {
   const [activeFilter, setActiveFilter] = useState<FilterTab>("All Curation");
   const filterBarRef = useRef<HTMLDivElement>(null);
   const [filterBarStuck, setFilterBarStuck] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  const toggleSelected = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const selectedCount = selectedIds.size;
+  const selectedServices = SERVICES.filter((s) => selectedIds.has(s.id));
 
   // Detect when filter bar becomes sticky
   useEffect(() => {
@@ -801,7 +854,12 @@ export default function ExplorePage() {
             {featured.length > 0 && (
               <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
                 {featured.map((service) => (
-                  <FeaturedCard key={service.id} service={service} />
+                  <FeaturedCard
+                    key={service.id}
+                    service={service}
+                    selected={selectedIds.has(service.id)}
+                    onToggle={() => toggleSelected(service.id)}
+                  />
                 ))}
               </div>
             )}
@@ -823,7 +881,12 @@ export default function ExplorePage() {
                 )}
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {standard.map((service) => (
-                    <ServiceCard key={service.id} service={service} />
+                    <ServiceCard
+                      key={service.id}
+                      service={service}
+                      selected={selectedIds.has(service.id)}
+                      onToggle={() => toggleSelected(service.id)}
+                    />
                   ))}
                 </div>
               </>
@@ -867,6 +930,73 @@ export default function ExplorePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Floating Smart Cart Bar ──────────────────────────────────────────── */}
+      <div
+        className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ease-out ${
+          selectedCount > 0
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 translate-y-6 pointer-events-none"
+        }`}
+        role="region"
+        aria-label="Your curated itinerary"
+      >
+        <div
+          className="flex items-center gap-0 border border-[#C9A96E]/40 bg-[#0D0D0D]/95 backdrop-blur-md shadow-[0_8px_48px_rgba(0,0,0,0.7)]"
+          style={{ borderRadius: 0 }}
+        >
+          {/* Left — count + label */}
+          <div className="flex flex-col gap-0.5 px-6 py-4 border-r border-[#C9A96E]/20">
+            <p
+              className="font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E] text-[9px] uppercase"
+              style={{ letterSpacing: "0.18em" }}
+            >
+              Your Curated Stay
+            </p>
+            <p
+              className="font-[family-name:var(--font-cormorant)] font-semibold text-[#F5F0EB] text-lg leading-none"
+            >
+              {selectedCount}{" "}
+              <span className="font-[300] text-[#F5F0EB]/50 text-sm">
+                {selectedCount === 1 ? "Activity" : "Activities"}
+              </span>
+            </p>
+          </div>
+
+          {/* Middle — service name pills (max 3) */}
+          <div className="hidden sm:flex items-center gap-2 px-5 max-w-xs overflow-hidden">
+            {selectedServices.slice(0, 3).map((s) => (
+              <span
+                key={s.id}
+                className="flex-shrink-0 font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/40 text-[9px] uppercase border border-[#C9A96E]/15 px-2.5 py-1"
+                style={{ letterSpacing: "0.1em" }}
+              >
+                {s.name.length > 18 ? s.name.slice(0, 17) + "…" : s.name}
+              </span>
+            ))}
+            {selectedCount > 3 && (
+              <span
+                className="flex-shrink-0 font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E]/50 text-[9px]"
+                style={{ letterSpacing: "0.1em" }}
+              >
+                +{selectedCount - 3} more
+              </span>
+            )}
+          </div>
+
+          {/* Right — CTA */}
+          <button
+            className="cta-gold flex items-center gap-3 bg-[#C9A96E] text-[#0D0D0D] px-7 py-5 font-[family-name:var(--font-montserrat)] font-[500] text-[10px] uppercase hover:bg-[#F5F0EB] transition-all whitespace-nowrap"
+            style={{ letterSpacing: "0.16em", borderRadius: 0 }}
+          >
+            Review &amp; Secure
+            <ArrowRight />
+          </button>
+        </div>
+      </div>
+
+      {/* Pad bottom so last card isn't hidden behind bar */}
+      {selectedCount > 0 && <div className="h-28" />}
 
     </main>
   );
