@@ -92,7 +92,7 @@ export default function HobieBeachPackage() {
                 className="font-[family-name:var(--font-montserrat)] font-[500] text-[#C9A96E] text-xl"
                 style={{ letterSpacing: "0.05em" }}
               >
-                $39.99
+                $49.99
                 <span className="font-[200] text-[#F5F0EB]/40 text-sm ml-2">
                   / All Day Access
                 </span>
