@@ -54,13 +54,6 @@ export default function Hero() {
           >
             Start Exploring
           </Link>
-          <a
-            href="#learn-more"
-            className="cta-gold inline-flex items-center justify-center border border-[#C9A96E] text-[#C9A96E] px-10 py-4 text-xs font-[300] uppercase hover:bg-[#C9A96E] hover:text-[#0D0D0D]"
-            style={{ letterSpacing: "0.15em", borderRadius: 0 }}
-          >
-            Learn More
-          </a>
         </div>
       </div>
 
