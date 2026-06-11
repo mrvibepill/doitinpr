@@ -85,7 +85,7 @@ const SERVICES: Service[] = [
     description: "Ascend above the coastline and take in panoramic views of San Juan from 400 feet. A breathtaking aerial escape over the Caribbean.",
     gradient: "from-[#080820] via-[#101035] to-[#050510]",
     topAccent: "border-t-[#3a3a9a]",
-    image: "https://images.squarespace-cdn.com/content/v1/67d108c93c81c847d2543a12/397f95b7-57fc-47c3-a1a7-f26685cf931c/Parasail+Puerto+Rico.JPG",
+    image: "https://images.squarespace-cdn.com/content/v1/67d108c93c81c847d2543a12/0a167fa2-ab88-4e8d-b0ca-b82675b681da/7R4Y0607.jpg?format=2500w",
   },
   {
     id: "metro-atv",
