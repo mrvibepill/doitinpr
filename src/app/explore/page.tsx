@@ -50,7 +50,7 @@ const SERVICES: Service[] = [
     gradient: "from-[#062030] via-[#0a3550] to-[#041825]",
     topAccent: "border-t-[#1a6fa0]",
     isFeatured: true,
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/35/17/49/cold-refreshments.jpg?w=1200&h=-1&s=1",
+    image: "https://www.irbchairs.com/cdn/shop/t/2/assets/slideshow_5.jpg?v=174928301860779592181758238617",
   },
 
   // ── Metro Area · Ocean Charters / Water Sports ───────────────────────────────

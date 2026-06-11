@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.pinegrovesurfclub.com" },
       { protocol: "https", hostname: "shesavesshetravels.com" },
       { protocol: "https", hostname: "sanjuantourspr.com" },
+      { protocol: "https", hostname: "www.irbchairs.com" },
     ],
   },
 };
