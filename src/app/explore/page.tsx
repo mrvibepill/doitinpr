@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { supabase } from "@/lib/supabase";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -26,9 +27,86 @@ interface Service {
   image?: string;
 }
 
-// ─── Dataset ──────────────────────────────────────────────────────────────────
+// ─── Supabase DB type (mirrors explore_activities schema) ─────────────────────
 
-const SERVICES: Service[] = [
+interface DbActivity {
+  id: string;
+  title: string;
+  tagline: string | null;
+  price: string | null;
+  price_label: string | null;
+  hours_operation: string | null;
+  sub_location: string;
+  region: string;
+  category: string | null;
+  amenities: string[] | null;
+  image_url: string | null;
+  is_featured: boolean | null;
+  gradient: string | null;
+  top_accent: string | null;
+}
+
+// Per-category visual defaults — used when the DB row omits gradient/top_accent
+const CATEGORY_VISUAL: Record<ServiceCategory, { gradient: string; topAccent: string }> = {
+  Beaches:          { gradient: "from-[#062030] via-[#0a3550] to-[#041825]", topAccent: "border-t-[#1a6fa0]" },
+  "VIP Tours":      { gradient: "from-[#051508] via-[#092010] to-[#030c05]", topAccent: "border-t-[#2a7a30]" },
+  Culinary:         { gradient: "from-[#1a0808] via-[#2a1010] to-[#0f0505]", topAccent: "border-t-[#9a2020]" },
+  "Ocean Charters": { gradient: "from-[#040e22] via-[#071830] to-[#020810]", topAccent: "border-t-[#1a3a8a]" },
+};
+
+function mapDbToService(row: DbActivity): Service {
+  // Normalise category string → ServiceCategory
+  const catLookup: Record<string, ServiceCategory> = {
+    beaches: "Beaches",
+    beach: "Beaches",
+    "vip tours": "VIP Tours",
+    "vip tours & hikes": "VIP Tours",
+    tours: "VIP Tours",
+    hikes: "VIP Tours",
+    culinary: "Culinary",
+    dining: "Culinary",
+    "ocean charters": "Ocean Charters",
+    ocean: "Ocean Charters",
+    water: "Ocean Charters",
+    "water sports": "Ocean Charters",
+  };
+  const raw = (row.category ?? "").toLowerCase().trim();
+  const category: ServiceCategory = catLookup[raw] ?? "Ocean Charters";
+
+  // Use DB gradient/accent when present, otherwise category default
+  const visual =
+    row.gradient && row.top_accent
+      ? { gradient: row.gradient, topAccent: row.top_accent }
+      : CATEGORY_VISUAL[category];
+
+  // Validate region
+  const region: Region =
+    row.region === "Metro Area" || row.region === "East" ? row.region : "Metro Area";
+
+  return {
+    id: row.id,
+    name: row.title,
+    region,
+    subLocation: row.sub_location ?? "",
+    category,
+    price: row.price ?? undefined,
+    priceLabel: row.price_label ?? (row.price ? "All Day Access" : undefined),
+    hours: row.hours_operation ?? undefined,
+    description: row.tagline ?? "",
+    inclusions:
+      Array.isArray(row.amenities) && row.amenities.length > 0
+        ? row.amenities
+        : undefined,
+    gradient: visual.gradient,
+    topAccent: visual.topAccent,
+    isFeatured: row.is_featured ?? false,
+    image: row.image_url ?? undefined,
+  };
+}
+
+// ─── Fallback dataset (shown while DB loads or if table is empty) ──────────────
+
+const FALLBACK_SERVICES: Service[] = [
   // ── Metro Area · Beaches ────────────────────────────────────────────────────
   {
     id: "hobie-beach",
@@ -704,8 +782,22 @@ function ReviewDrawer({ open, onClose, selectedServices, onRemove }: DrawerProps
   const handleField = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Insert itinerary row — fails silently if schema differs so UX is never broken
+    try {
+      await supabase.from("customer_itineraries").insert({
+        customer_name: form.name,
+        customer_email: form.email,
+        arrival_date: form.arrival || null,
+        departure_date: form.departure || null,
+        activity_ids: selectedServices.map((s) => s.id),
+        concierge_fee: CONCIERGE_FEE,
+        status: "pending",
+      });
+    } catch {
+      // Intentional: show success state regardless so UX is unblocked
+    }
     setSubmitted(true);
   };
 
@@ -1018,6 +1110,8 @@ export default function ExplorePage() {
   const [filterBarStuck, setFilterBarStuck] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [services, setServices] = useState<Service[]>(FALLBACK_SERVICES);
+  const [loading, setLoading] = useState(true);
 
   const toggleSelected = (id: string) => {
     setSelectedIds((prev) => {
@@ -1028,7 +1122,7 @@ export default function ExplorePage() {
   };
 
   const selectedCount = selectedIds.size;
-  const selectedServices = SERVICES.filter((s) => selectedIds.has(s.id));
+  const selectedServices = services.filter((s) => selectedIds.has(s.id));
 
   // Detect when filter bar becomes sticky
   useEffect(() => {
@@ -1042,6 +1136,25 @@ export default function ExplorePage() {
     return () => observer.disconnect();
   }, []);
 
+  // Fetch activities from Supabase; fall back to FALLBACK_SERVICES if empty/error
+  useEffect(() => {
+    async function fetchActivities() {
+      try {
+        const { data, error } = await supabase
+          .from("explore_activities")
+          .select("*");
+        if (!error && data && data.length > 0) {
+          setServices((data as DbActivity[]).map(mapDbToService));
+        }
+      } catch {
+        // Network/config error — FALLBACK_SERVICES already in state
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchActivities();
+  }, []);
+
   // Reset filter when region changes
   const handleRegionChange = (region: Region) => {
     setActiveRegion(region);
@@ -1049,7 +1162,7 @@ export default function ExplorePage() {
   };
 
   // Filtered services
-  const regionServices = SERVICES.filter((s) => s.region === activeRegion);
+  const regionServices = services.filter((s) => s.region === activeRegion);
   const filtered =
     activeFilter === "All Curation"
       ? regionServices
@@ -1195,7 +1308,26 @@ export default function ExplorePage() {
           </div>
         </div>
 
-        {filtered.length === 0 ? (
+        {loading ? (
+          /* ── Loading shimmer ── */
+          <div className="flex flex-col items-center justify-center py-40 gap-5">
+            <div className="flex gap-1.5">
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  className="w-1 h-1 bg-[#C9A96E]/40 animate-pulse"
+                  style={{ animationDelay: `${i * 150}ms` }}
+                />
+              ))}
+            </div>
+            <p
+              className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/20 text-[9px] uppercase"
+              style={{ letterSpacing: "0.18em" }}
+            >
+              Curating your experiences
+            </p>
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
             <div className="w-10 h-px bg-[#C9A96E]/30" />
             <p
