@@ -320,7 +320,7 @@ const SERVICES: Service[] = [
     description: "Intimate farm-to-table experiences and upscale casual dining on the edge of El Yunque. Locally sourced, expertly prepared.",
     gradient: "from-[#0d1508] via-[#182010] to-[#080c05]",
     topAccent: "border-t-[#4a7020]",
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/f2/64/97/photo0jpg.jpg?w=900&h=500&s=1",
+    image: "https://media-production.lp-cdn.com/cdn-cgi/image/format=auto,quality=85/https://media-production.lp-cdn.com/media/352e0dc1-1cb4-434d-a863-cf7e755b08a2",
   },
   {
     id: "east-dine-faj",
