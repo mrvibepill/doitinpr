@@ -399,6 +399,7 @@ function FeaturedCard({ service }: { service: Service }) {
             src={service.image}
             alt={service.name}
             fill
+            unoptimized
             className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 40vw"
           />
@@ -534,6 +535,7 @@ function ServiceCard({ service }: { service: Service }) {
             src={service.image}
             alt={service.name}
             fill
+            unoptimized
             className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
