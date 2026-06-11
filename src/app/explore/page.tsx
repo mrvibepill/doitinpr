@@ -107,6 +107,7 @@ const SERVICES: Service[] = [
     description: "A serene horseback journey through the grounds of Hacienda Campo Rico. Bespoke trails for all experience levels.",
     gradient: "from-[#0f1508] via-[#182010] to-[#090e05]",
     topAccent: "border-t-[#4a6a20]",
+    image: "https://queensland.com/content/dam/teq/consumer/global/images/destinations/tropical-north-queensland/blog-images/hero-banner/2021_TNQ_CapeTribulationHorseRides_Beaches_JackHarlem_142342.jpg",
   },
   {
     id: "metro-laguna",
