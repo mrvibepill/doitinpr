@@ -118,7 +118,7 @@ const SERVICES: Service[] = [
     description: "Glide through the mangrove lagoons of Condado with an expert guide. Discover hidden ecosystems steps from the city's skyline.",
     gradient: "from-[#041510] via-[#072218] to-[#020d0a]",
     topAccent: "border-t-[#1a7050]",
-    image: "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/13/c4/8d/be.jpg",
+    image: "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-674x446/13/c4/8d/c1.jpg",
   },
   {
     id: "metro-paddleboard",
