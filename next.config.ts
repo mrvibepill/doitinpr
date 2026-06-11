@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.luquillobeach.com" },
       { protocol: "https", hostname: "www.discoverpuertorico.com" },
       { protocol: "https", hostname: "www.pelago.com" },
+      { protocol: "https", hostname: "encrypted-tbn0.gstatic.com" },
     ],
   },
 };

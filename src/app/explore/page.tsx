@@ -249,6 +249,7 @@ const SERVICES: Service[] = [
     description: "A spacious private catamaran departure from Fajardo Marina. Ideal for groups — enjoy open decks, snorkeling gear, and a curated on-board experience.",
     gradient: "from-[#041820] via-[#072830] to-[#020f18]",
     topAccent: "border-t-[#1a6a80]",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVHvbMJRNA8TNebsccs5qHyUs-ifd7_MIGmA&s",
   },
   {
     id: "east-boat",
