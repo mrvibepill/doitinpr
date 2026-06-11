@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "puertoricojetskirental.com" },
       { protocol: "https", hostname: "www.luquillobeach.com" },
       { protocol: "https", hostname: "www.discoverpuertorico.com" },
+      { protocol: "https", hostname: "www.pelago.com" },
     ],
   },
 };

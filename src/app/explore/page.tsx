@@ -284,6 +284,7 @@ const SERVICES: Service[] = [
     gradient: "from-[#051508] via-[#092010] to-[#030c05]",
     topAccent: "border-t-[#2a7a30]",
     isFeatured: true,
+    image: "https://www.pelago.com/img/products/PR-Puerto%20Rico/el-yunque-rainforest-experience/ad42afb0-72ff-4555-b279-4dc53ef3639f_el-yunque-rainforest-experience.jpg",
   },
   {
     id: "east-carabali",
