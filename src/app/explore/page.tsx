@@ -224,7 +224,7 @@ const SERVICES: Service[] = [
     gradient: "from-[#052520] via-[#083d32] to-[#031510]",
     topAccent: "border-t-[#1a8060]",
     isFeatured: true,
-    image: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/7a/8d/48/luquillo-beach.jpg?w=700&h=-1&s=1",
+    image: "https://www.discoverpuertorico.com/sites/default/files/styles/share_image/public/2019-04/luquillo-beach-palms.jpg?itok=Z3JjvuAi",
   },
 
   // ── East · Ocean Charters ──────────────────────────────────────────────────────
