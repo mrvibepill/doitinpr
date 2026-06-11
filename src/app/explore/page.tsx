@@ -651,6 +651,364 @@ function ServiceCard({ service, selected, onToggle }: CardProps) {
   );
 }
 
+// ─── Review Drawer ────────────────────────────────────────────────────────────
+
+interface DrawerProps {
+  open: boolean;
+  onClose: () => void;
+  selectedServices: Service[];
+  onRemove: (id: string) => void;
+}
+
+interface FormState {
+  name: string;
+  email: string;
+  arrival: string;
+  departure: string;
+}
+
+function CloseIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
+    </svg>
+  );
+}
+
+function TrashIcon() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+      <path d="M1 3H10M4 3V2H7V3M2 3L2.5 9.5H8.5L9 3" stroke="currentColor" strokeWidth="1.1" strokeLinecap="square" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ReviewDrawer({ open, onClose, selectedServices, onRemove }: DrawerProps) {
+  const [form, setForm] = useState<FormState>({ name: "", email: "", arrival: "", departure: "" });
+  const [submitted, setSubmitted] = useState(false);
+
+  // Close on ESC
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [open, onClose]);
+
+  // Lock body scroll while open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  const handleField = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  const CONCIERGE_FEE = 150;
+  const pricedItems = selectedServices.filter((s) => s.price);
+
+  const inputClass =
+    "w-full bg-transparent border border-[#C9A96E]/20 focus:border-[#C9A96E]/70 outline-none px-4 py-3 font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB] text-sm placeholder-[#F5F0EB]/20 transition-colors duration-200";
+
+  const labelClass =
+    "font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E] text-[9px] uppercase block mb-2";
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className={`fixed inset-0 z-40 bg-black/70 backdrop-blur-sm transition-opacity duration-400 ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={onClose}
+        aria-hidden="true"
+      />
+
+      {/* Drawer panel */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Review your curated stay"
+        className={`fixed top-0 right-0 bottom-0 z-50 w-full max-w-[500px] bg-[#0f0f0f] border-l border-[#C9A96E]/20 flex flex-col transition-transform duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {/* ── Drawer header ── */}
+        <div className="flex-shrink-0 px-8 pt-8 pb-6 border-b border-[#C9A96E]/10">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col gap-2">
+              <p
+                className="font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E] text-[9px] uppercase"
+                style={{ letterSpacing: "0.18em" }}
+              >
+                Do It In PR &nbsp;·&nbsp; Concierge
+              </p>
+              <h2 className="font-[family-name:var(--font-cormorant)] font-semibold text-[#F5F0EB] text-2xl leading-tight">
+                Your Curated
+                <br />
+                <span className="italic">Puerto Rico Stay</span>
+              </h2>
+              <p
+                className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/35 text-xs leading-5 mt-1"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Review your selections, fill in your dates, and lock
+                in your concierge reservation in one step.
+              </p>
+            </div>
+            <button
+              onClick={onClose}
+              className="flex-shrink-0 p-2 text-[#F5F0EB]/30 hover:text-[#C9A96E] transition-colors duration-200 mt-1"
+              aria-label="Close drawer"
+            >
+              <CloseIcon />
+            </button>
+          </div>
+        </div>
+
+        {/* ── Scrollable body ── */}
+        <div className="flex-1 overflow-y-auto px-8 py-6 flex flex-col gap-8">
+
+          {/* Selected services list */}
+          <div className="flex flex-col gap-1">
+            <p
+              className="font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E] text-[9px] uppercase mb-3"
+              style={{ letterSpacing: "0.15em" }}
+            >
+              Selected Experiences ({selectedServices.length})
+            </p>
+            {selectedServices.length === 0 ? (
+              <p className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/25 text-xs">
+                No experiences added yet.
+              </p>
+            ) : (
+              <ul className="flex flex-col gap-0">
+                {selectedServices.map((s, i) => (
+                  <li
+                    key={s.id}
+                    className={`flex items-center justify-between gap-4 py-3.5 ${
+                      i < selectedServices.length - 1 ? "border-b border-[#C9A96E]/8" : ""
+                    }`}
+                  >
+                    <div className="flex flex-col gap-0.5 min-w-0">
+                      <span
+                        className="font-[family-name:var(--font-montserrat)] font-[300] text-[#F5F0EB]/80 text-xs truncate"
+                        style={{ letterSpacing: "0.03em" }}
+                      >
+                        {s.name}
+                      </span>
+                      <span
+                        className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/30 text-[10px]"
+                        style={{ letterSpacing: "0.08em" }}
+                      >
+                        {s.subLocation}
+                        {s.price && (
+                          <span className="text-[#C9A96E]/70 ml-2">{s.price}</span>
+                        )}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => onRemove(s.id)}
+                      className="flex-shrink-0 p-1.5 text-[#F5F0EB]/20 hover:text-[#C9A96E]/70 transition-colors duration-200"
+                      aria-label={`Remove ${s.name}`}
+                    >
+                      <TrashIcon />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* Divider */}
+          <div className="w-full h-px bg-[#C9A96E]/10" />
+
+          {/* Intake form */}
+          {submitted ? (
+            <div className="flex flex-col items-center gap-4 py-8 text-center">
+              <div className="w-10 h-10 border border-[#C9A96E]/40 flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M2 8L6.5 12.5L14 4" stroke="#C9A96E" strokeWidth="1.3" strokeLinecap="square" />
+                </svg>
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="font-[family-name:var(--font-cormorant)] font-semibold text-[#F5F0EB] text-xl">
+                  Reservation Received
+                </p>
+                <p
+                  className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/40 text-xs leading-5"
+                  style={{ letterSpacing: "0.03em" }}
+                >
+                  Your itinerary is locked. A concierge will contact
+                  you within 2 hours to confirm details and process
+                  the service fee.
+                </p>
+                <p
+                  className="font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E]/50 text-[9px] mt-2 uppercase"
+                  style={{ letterSpacing: "0.12em" }}
+                >
+                  ✦ &nbsp; Stripe payment link will be sent to {form.email || "your email"}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+              <p
+                className="font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E] text-[9px] uppercase -mb-1"
+                style={{ letterSpacing: "0.15em" }}
+              >
+                Your Details
+              </p>
+
+              {/* Name + Email */}
+              <div className="flex flex-col gap-4">
+                <div>
+                  <label htmlFor="drawer-name" className={labelClass} style={{ letterSpacing: "0.12em" }}>
+                    Full Name
+                  </label>
+                  <input
+                    id="drawer-name"
+                    name="name"
+                    type="text"
+                    value={form.name}
+                    onChange={handleField}
+                    placeholder="Your full name"
+                    required
+                    className={inputClass}
+                    style={{ borderRadius: 0, letterSpacing: "0.03em" }}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="drawer-email" className={labelClass} style={{ letterSpacing: "0.12em" }}>
+                    Email Address
+                  </label>
+                  <input
+                    id="drawer-email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleField}
+                    placeholder="your@email.com"
+                    required
+                    className={inputClass}
+                    style={{ borderRadius: 0, letterSpacing: "0.03em" }}
+                  />
+                </div>
+              </div>
+
+              {/* Dates */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="drawer-arrival" className={labelClass} style={{ letterSpacing: "0.12em" }}>
+                    Arrival Date
+                  </label>
+                  <input
+                    id="drawer-arrival"
+                    name="arrival"
+                    type="date"
+                    value={form.arrival}
+                    onChange={handleField}
+                    required
+                    className={inputClass}
+                    style={{ borderRadius: 0, colorScheme: "dark" }}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="drawer-departure" className={labelClass} style={{ letterSpacing: "0.12em" }}>
+                    Departure Date
+                  </label>
+                  <input
+                    id="drawer-departure"
+                    name="departure"
+                    type="date"
+                    value={form.departure}
+                    onChange={handleField}
+                    required
+                    className={inputClass}
+                    style={{ borderRadius: 0, colorScheme: "dark" }}
+                  />
+                </div>
+              </div>
+            </form>
+          )}
+
+          {/* Divider */}
+          {!submitted && <div className="w-full h-px bg-[#C9A96E]/10" />}
+
+          {/* Price breakdown */}
+          {!submitted && (
+            <div className="flex flex-col gap-3">
+              <p
+                className="font-[family-name:var(--font-montserrat)] font-[200] text-[#C9A96E] text-[9px] uppercase"
+                style={{ letterSpacing: "0.15em" }}
+              >
+                Fee Summary
+              </p>
+              {pricedItems.map((s) => (
+                <div key={s.id} className="flex items-center justify-between">
+                  <span
+                    className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/40 text-xs"
+                    style={{ letterSpacing: "0.03em" }}
+                  >
+                    {s.name} <span className="text-[#F5F0EB]/20">· {s.subLocation}</span>
+                  </span>
+                  <span className="font-[family-name:var(--font-montserrat)] font-[300] text-[#F5F0EB]/50 text-xs">
+                    {s.price}
+                  </span>
+                </div>
+              ))}
+              <div className="flex items-center justify-between pt-2 border-t border-[#C9A96E]/10">
+                <span
+                  className="font-[family-name:var(--font-montserrat)] font-[300] text-[#F5F0EB]/70 text-xs"
+                  style={{ letterSpacing: "0.05em" }}
+                >
+                  Concierge Service Fee
+                </span>
+                <span className="font-[family-name:var(--font-montserrat)] font-[500] text-[#C9A96E] text-sm">
+                  ${CONCIERGE_FEE.toFixed(2)}
+                </span>
+              </div>
+              <p
+                className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/20 text-[10px] leading-5"
+                style={{ letterSpacing: "0.03em" }}
+              >
+                Activity provider fees are secured post-confirmation.
+                No additional charges until your concierge review.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* ── Sticky footer CTA ── */}
+        {!submitted && (
+          <div className="flex-shrink-0 px-8 py-6 border-t border-[#C9A96E]/10 bg-[#0f0f0f]">
+            <button
+              onClick={handleSubmit}
+              disabled={selectedServices.length === 0}
+              className="cta-gold w-full flex items-center justify-center gap-3 bg-[#C9A96E] text-[#0D0D0D] py-4 font-[family-name:var(--font-montserrat)] font-[500] text-[10px] uppercase hover:bg-[#F5F0EB] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+              style={{ letterSpacing: "0.18em", borderRadius: 0 }}
+            >
+              Secure My Dates &amp; Lock Fee
+              <ArrowRight />
+            </button>
+            <p
+              className="font-[family-name:var(--font-montserrat)] font-[200] text-[#F5F0EB]/15 text-[9px] text-center mt-3"
+              style={{ letterSpacing: "0.1em" }}
+            >
+              Concierge responds within 2 hours &nbsp;·&nbsp; No charge until confirmed
+            </p>
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
 export default function ExplorePage() {
@@ -659,6 +1017,7 @@ export default function ExplorePage() {
   const filterBarRef = useRef<HTMLDivElement>(null);
   const [filterBarStuck, setFilterBarStuck] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleSelected = (id: string) => {
     setSelectedIds((prev) => {
@@ -986,6 +1345,7 @@ export default function ExplorePage() {
 
           {/* Right — CTA */}
           <button
+            onClick={() => setDrawerOpen(true)}
             className="cta-gold flex items-center gap-3 bg-[#C9A96E] text-[#0D0D0D] px-7 py-5 font-[family-name:var(--font-montserrat)] font-[500] text-[10px] uppercase hover:bg-[#F5F0EB] transition-all whitespace-nowrap"
             style={{ letterSpacing: "0.16em", borderRadius: 0 }}
           >
@@ -997,6 +1357,14 @@ export default function ExplorePage() {
 
       {/* Pad bottom so last card isn't hidden behind bar */}
       {selectedCount > 0 && <div className="h-28" />}
+
+      {/* Review Drawer */}
+      <ReviewDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        selectedServices={selectedServices}
+        onRemove={toggleSelected}
+      />
 
     </main>
   );
